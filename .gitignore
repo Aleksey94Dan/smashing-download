@@ -1,0 +1,10 @@
+__pycache__/
+.pytest_cache/
+/dist
+.git/
+*.egg_info
+
+
+.coverage
+coverage.xml
+*.swp
