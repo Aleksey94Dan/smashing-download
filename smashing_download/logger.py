@@ -1,7 +1,6 @@
 """Basic logging setup."""
 
 import logging
-from typing import Optional
 
 NONE = 'none'
 DEBUG = 'debug'
@@ -9,8 +8,10 @@ INFO = 'info'  # noqa: WPS110
 ERROR = 'error'
 
 
-def setup(level: Optional[str]) -> None:
+def setup(level: str) -> None:
     """Configure a basic logger."""
+    if level == NONE:
+        return
     if level == INFO:
         log_level = logging.INFO
     elif level == DEBUG:

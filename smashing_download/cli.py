@@ -1,6 +1,7 @@
 
 """Extract images for the desktop."""
 import argparse
+import datetime
 from pathlib import Path
 
 from smashing_download import logger
@@ -15,6 +16,24 @@ def dir_path(path_to_save: str) -> Path:
     return path
 
 
+def get_date(actual_date: str) -> datetime.date:
+    if len(actual_date.split('-')) < 2:
+        raise argparse.ArgumentTypeError(
+            '{0} is not valid format date'.format(actual_date),
+        )
+    actual_date = '{0}-01'.format(actual_date)
+    return datetime.date.fromisoformat(actual_date)
+
+
+def get_resolution(actual_res: str) -> str:
+    res = actual_res.split('x')
+    if len(res) < 2:
+        raise argparse.ArgumentTypeError(
+            '{0} is not valid resolution'.format(''.join(res)),
+        )
+    return ''.join(res)
+
+
 def get_parser() -> argparse.ArgumentParser:
     """Parser comand line arguments."""
     parser = argparse.ArgumentParser(
@@ -25,9 +44,16 @@ def get_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         '-r',
         '--res',
-        type=str,
+        type=get_resolution,
         default='1920x1080',
-        help='Screen resolution, 2560x1440.',
+        help='Screen resolution, 1920x1080.',
+    )
+    parser.add_argument(
+        '-d',
+        '--date',
+        type=get_date,
+        default=datetime.date.today(),
+        help='Year and month for download.',
     )
     parser.add_argument(
         '-o',

@@ -13,7 +13,7 @@ def main() -> None:
 
     args = cli.get_parser().parse_args()
 
-    logger.setup(args.level)
+    logger.setup(args.verbosity)
     logging.debug(
         'The program was called with arguments: {0}'.format(args),
     )
