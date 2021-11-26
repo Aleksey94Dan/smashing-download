@@ -3,18 +3,13 @@
 import logging
 from typing import Optional
 
-
-# __all__ = ['NONE', 'DEBUG', 'INFO', 'ERROR']
-
-
 NONE = 'none'
 DEBUG = 'debug'
-INFO = 'info'
+INFO = 'info'  # noqa: WPS110
 ERROR = 'error'
 
 
-
-def setup(level: Optional[str]):
+def setup(level: Optional[str]) -> None:
     """Configure a basic logger."""
     if level == INFO:
         log_level = logging.INFO
@@ -28,9 +23,8 @@ def setup(level: Optional[str]):
     logger = logging.getLogger()
     logger.setLevel(log_level)
     formatter = logging.Formatter(
-        '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        '%(asctime)s - %(name)s - %(levelname)s - %(message)s',  # noqa: WPS323
     )
     ch = logging.StreamHandler()
     ch.setFormatter(formatter)
     logger.addHandler(ch)
-

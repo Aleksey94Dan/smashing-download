@@ -1,5 +1,6 @@
 __pycache__/
 .pytest_cache/
+.mypy_cache/
 /dist
 .git/
 *.egg_info
@@ -8,3 +9,6 @@ __pycache__/
 .coverage
 coverage.xml
 *.swp
+
+
+.python-version

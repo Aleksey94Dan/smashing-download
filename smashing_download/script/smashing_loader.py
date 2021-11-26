@@ -1,37 +1,27 @@
 # !/usr/bin/env python3
 
-from smashing_download import cli
-from smashing_download import logger
-from smashing_download import loader
 import logging
+import sys
+
+from smashing_download import cli, loader, logger
+
+EXIT_SUCCES = 0
+EXIT_FAILURE = 0
 
 
-
-
-
-def main():
+def main() -> None:
 
     args = cli.get_parser().parse_args()
 
-    output = args.output
-    res = args.res
-    level = args.verbosity
-
-    #todo: Разобрать с logger.NONE -> кажется какая-то херня
-
-    logger.setup(level)
+    logger.setup(args.level)
     logging.debug(
-        'The program was called with arguments: {}'.format(args),
+        'The program was called with arguments: {0}'.format(args),
     )
-    try:
-        path_to_wallpapers = loader.download(res, output)
-    except:
-        pass
-    else:
-        print('Wallpaper download completed successfully')
-        
+    exit_code = EXIT_FAILURE
+    path_to_wallpapers = loader.download(args.res, args.output)
+    print(path_to_wallpapers)
+    sys.exit(exit_code)
 
 
 if __name__ == '__main__':
     main()
-
