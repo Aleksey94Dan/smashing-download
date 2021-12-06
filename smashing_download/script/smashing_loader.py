@@ -6,7 +6,7 @@ import sys
 from smashing_download import cli, loader, logger
 
 EXIT_SUCCES = 0
-EXIT_FAILURE = 0
+EXIT_FAILURE = 1
 
 
 def main() -> None:
@@ -18,7 +18,7 @@ def main() -> None:
         'The program was called with arguments: {0}'.format(args),
     )
     exit_code = EXIT_FAILURE
-    path_to_wallpapers = loader.download(args.res, args.output)
+    path_to_wallpapers = loader.download(args.res, args.date, args.output)
     print(path_to_wallpapers)
     sys.exit(exit_code)
 

@@ -31,7 +31,7 @@ def get_resolution(actual_res: str) -> str:
         raise argparse.ArgumentTypeError(
             '{0} is not valid resolution'.format(''.join(res)),
         )
-    return ''.join(res)
+    return 'x'.join(res)
 
 
 def get_parser() -> argparse.ArgumentParser:
