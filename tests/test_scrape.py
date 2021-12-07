@@ -1,4 +1,3 @@
-
 """Testing scrape."""
 
 from smashing_download import scrape
