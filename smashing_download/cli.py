@@ -1,4 +1,3 @@
-
 """Extract images for the desktop."""
 import argparse
 import datetime
@@ -7,7 +6,8 @@ from pathlib import Path
 from smashing_download import logger
 
 
-def dir_path(path_to_save: str) -> Path:
+def get_dir_path(path_to_save: str) -> Path:
+    """Get the directory entered by the user."""
     path = Path(path_to_save)
     if not path.is_dir():
         raise argparse.ArgumentTypeError(
@@ -17,6 +17,7 @@ def dir_path(path_to_save: str) -> Path:
 
 
 def get_date(actual_date: str) -> datetime.date:
+    """Get the date entered by the user."""
     if len(actual_date.split('-')) < 2:
         raise argparse.ArgumentTypeError(
             '{0} is not valid format date'.format(actual_date),
@@ -26,6 +27,7 @@ def get_date(actual_date: str) -> datetime.date:
 
 
 def get_resolution(actual_res: str) -> str:
+    """Get the screen resolution entered by the user."""
     res = actual_res.split('x')
     if len(res) < 2:
         raise argparse.ArgumentTypeError(
@@ -58,7 +60,7 @@ def get_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         '-o',
         '--output',
-        type=dir_path,
+        type=get_dir_path,
         default=Path.cwd(),
         help='The directory where to save files',
     )

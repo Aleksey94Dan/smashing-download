@@ -3,10 +3,6 @@
 import datetime
 from pathlib import Path
 
-TEMPLATE_URL = (
-    'https://www.smashingmagazine.com/{0}/{1}/'
-    'desktop-wallpaper-calendars-{2}-{0}/'
-)
 NAME_DIR = 'wallpaper-calendar-{0}-{1}'
 ENCODING = 'utf-8'
 WRITE_MODE = 'wb'
@@ -29,13 +25,6 @@ def download(
     path_to_save: Path,
 ) -> Path:
     """Download and save resuource in directory."""
-    year = actual_date.year
-    month = actual_date.strftime('%m')
-    month_full_name = actual_date.strftime('%B')
-    url = TEMPLATE_URL.format(year, month, month_full_name.lower())
-    print(url)
-
-
     print(resolution)  # noqa: E303
     print(actual_date)  # noqa: E303
     print(path_to_save)  # noqa: E303

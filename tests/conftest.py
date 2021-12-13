@@ -21,6 +21,10 @@ IMAGE_URL = (
     '38885607-1210454835.1632544118'
 )
 
+YEAR = 2021
+DAY = 1
+MONTHS = range(1, 13)  # noqa:WPS432
+
 
 @pytest.fixture()
 def html() -> str:
