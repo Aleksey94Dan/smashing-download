@@ -2,6 +2,9 @@
 
 import datetime
 from pathlib import Path
+from typing import Callable, Iterator
+
+from smashing_download import parser, scrape
 
 NAME_DIR = 'wallpaper-calendar-{0}-{1}'
 ENCODING = 'utf-8'
@@ -19,14 +22,26 @@ def store(path_to_save: Path, actual_data: bytes) -> None:
         the_out.write(actual_data)
 
 
+def _compose(function1, function2):  # type: ignore
+    def inner(url: str, resolution: str):  # type: ignore
+        return function1(function2(url), resolution)
+    return inner
+
+
+def get_image_hrefs(
+    url: str,
+    resolution: str,
+) -> Callable[[str, str], Iterator[str]]:
+    return _compose(parser.get_image_hrefs, scrape.get_content)(url, resolution)
+
+
 def download(
     resolution: str,
     actual_date: datetime.date,
     path_to_save: Path,
 ) -> Path:
     """Download and save resuource in directory."""
-    print(resolution)  # noqa: E303
-    print(actual_date)  # noqa: E303
-    print(path_to_save)  # noqa: E303
-
-    return Path('pass')
+    url = parser.urlunparse(actual_date)
+    image_hrefs = get_image_hrefs(url, resolution)
+    print(image_hrefs)
+    return path_to_save

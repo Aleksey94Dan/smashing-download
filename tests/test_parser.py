@@ -100,3 +100,10 @@ def test_parse_url(desired_date, expected_url):
     actual_url = parser.urlunparse(desired_date)  # act
 
     assert expected_url == actual_url
+
+
+def test_get_image_hrefs(html, expected_hrefs):
+    """Test get image hrefs."""
+    actual_hrefs = set(parser.get_image_hrefs(html, '320x480'))  # act
+
+    assert expected_hrefs == actual_hrefs

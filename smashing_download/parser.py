@@ -14,6 +14,7 @@ ONLY_A_TAGS = SoupStrainer(IMAGE_TAG)
 
 def urlunparse(actual_date: datetime.date) -> str:
     """Collect url string from date."""
+    actual_date = actual_date.replace(day=1)
     z_date = actual_date - datetime.timedelta(days=1)
     z_year = z_date.year
     z_month = z_date.strftime('%m')
