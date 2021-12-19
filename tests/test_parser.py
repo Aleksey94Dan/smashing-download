@@ -95,7 +95,7 @@ from smashing_download import parser
         ),
     ],
 )
-def test_parse_url(desired_date, expected_url):
+def test_parse_base_url(desired_date, expected_url):
     """Test url."""
     actual_url = parser.urlunparse(desired_date)  # act
 
@@ -107,3 +107,35 @@ def test_get_image_hrefs(html, expected_hrefs):
     actual_hrefs = set(parser.get_image_hrefs(html, '320x480'))  # act
 
     assert expected_hrefs == actual_hrefs
+
+
+@pytest.mark.parametrize(  # noqa: WPS317
+    (
+        'hrefs', 'expected_image_name',
+    ),
+    [
+        (
+            (
+                'http://files.smashingmagazine.com/wallpapers/nov-21/'
+                'no-shave-november/nocal/nov-21-no-shave-november-nocal'
+                '-640x480.jpg?_ga=2.14374199.1677587011.1639791961-12104'
+                '54835.1632544118'
+            ),
+            'nov-21-no-shave-november-nocal-640x480.jpg',
+        ),
+        (
+            (
+                'http://files.smashingmagazine.com/wallpapers/nov-21/'
+                'winter-is-here/nocal/nov-21-winter-is-here-nocal-192'
+                '0x1200.png?_ga=2.257169675.1677587011.1639791961-121'
+                '0454835.1632544118'
+            ),
+            'nov-21-winter-is-here-nocal-1920x1200.png',
+        ),
+    ],
+)
+def test_get_name_hrefs(hrefs, expected_image_name):
+    """Test get name from hrefs."""
+    actual_image_name = parser.get_name_hrefs(hrefs)  # act
+
+    assert expected_image_name == actual_image_name

@@ -1,5 +1,7 @@
 import datetime
+import os.path  # noqa: WPS301
 from typing import Iterator
+from urllib.parse import urlparse
 
 from bs4 import BeautifulSoup, SoupStrainer
 
@@ -41,4 +43,12 @@ def _get_image_hrefs(soup: BeautifulSoup, resolution: str) -> Iterator[str]:
 
 
 def get_image_hrefs(html: str, resolution: str) -> Iterator[str]:
+    """Get url for image."""
     return _get_image_hrefs(_get_soup(html), resolution)
+
+
+def get_name_hrefs(image_href: str) -> str:
+    """Get name for image."""
+    path_from_url = urlparse(image_href).path
+    _, name_image = os.path.split(path_from_url)
+    return name_image

@@ -41,13 +41,10 @@ def get_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog='smashing-download',
         description='CLI utility for downloading wallpaper from mashing site.',
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument(
-        '-r',
-        '--res',
+        'res',
         type=get_resolution,
-        default='1920x1080',
         help='Screen resolution, 1920x1080.',
     )
     parser.add_argument(
