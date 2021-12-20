@@ -1,14 +1,17 @@
 """Prepare fixture."""
 
+import json
 from pathlib import Path
 from typing import Set
 
 import pytest
+from smashing_download import logger
 
 FIXTURE_DIR = Path(__file__).resolve().parent / 'fixture'
 
 BASE_PAGE = FIXTURE_DIR / 'site/index.html'
 BASE_IMAGE = FIXTURE_DIR / 'images/nov-21-no-shave-november-cal-640x480.jpg'
+URI_DATA = FIXTURE_DIR / 'uri.json'
 
 BASE_URL = (
     'https://www.smashingmagazine.com/2021/10/'
@@ -25,6 +28,9 @@ IMAGE_URL = (
 YEAR = 2021
 DAY = 1
 MONTHS = range(1, 13)  # noqa:WPS432
+
+
+logger.setup(logger.DEBUG)
 
 
 @pytest.fixture()
@@ -54,86 +60,4 @@ def image_url() -> str:
 @pytest.fixture()
 def expected_hrefs() -> Set[str]:
     """Return hrefs."""
-    return {(
-        'http://files.smashingmagazine.com/wallpapers/'
-        'nov-14/november-ingredients/nocal/'
-        'nov-14-november-ingredients-nocal-320x480.jpg'
-    ),
-        (
-        'http://files.smashingmagazine.com/wallpapers/'
-        'nov-14/simple-leaves/nocal/'
-        'nov-14-simple-leaves-nocal-320x480.png'
-    ),
-        (
-        'http://files.smashingmagazine.com/wallpapers/'
-        'nov-15/november-nights-on-mountains/nocal/'
-        'nov-15-november-nights-on-mountains-nocal-320x480.png'
-    ),
-        (
-        'http://files.smashingmagazine.com/wallpapers/'
-        'nov-16/deer-fall-i-love-you/nocal/'
-        'nov-16-deer-fall-i-love-you-nocal-320x480.png'
-    ),
-        (
-        'http://files.smashingmagazine.com/wallpapers/'
-        'nov-16/time-to-give-thanks/nocal/'
-        'nov-16-time-to-give-thanks-nocal-320x480.png'
-    ),
-        (
-        'http://files.smashingmagazine.com/wallpapers/'
-        'nov-17/curious-squirrel/nocal/'
-        'nov-17-curious-squirrel-nocal-320x480.jpg'
-    ),
-        (
-        'http://files.smashingmagazine.com/wallpapers/'
-        'nov-17/peanut-butter-jelly-time/nocal/'
-        'nov-17-peanut-butter-jelly-time-nocal-320x480.png'
-    ),
-        (
-        'http://files.smashingmagazine.com/wallpapers/'
-        'nov-17/tempestuous-november/nocal/'
-        'nov-17-tempestuous-november-nocal-320x480.png'
-    ),
-        (
-        'http://files.smashingmagazine.com/wallpapers/'
-        'nov-17/the-kind-soul/nocal/nov-17-the-kind-soul-nocal-320x480.jpg'
-    ),
-        (
-        'http://files.smashingmagazine.com/wallpapers/'
-        'nov-18/outer-space/nocal/nov-18-outer-space-nocal-320x480.jpg'
-    ),
-        (
-        'http://files.smashingmagazine.com/wallpapers/'
-        'nov-18/running-through-autumn-mist/nocal/'
-        'nov-18-running-through-autumn-mist-nocal-320x480.png'
-    ),
-        (
-        'http://files.smashingmagazine.com/wallpapers/'
-        'nov-19/international-civil-aviation-day/nocal/'
-        'nov-19-international-civil-aviation-day-nocal-320x480.jpg'
-    ),
-        (
-        'http://files.smashingmagazine.com/wallpapers/'
-        'nov-21/farewell-to-autumn/cal/'
-        'nov-21-farewell-to-autumn-cal-320x480.png'
-    ),
-        (
-        'http://files.smashingmagazine.com/wallpapers/'
-        'nov-21/farewell-to-autumn/nocal/'
-        'nov-21-farewell-to-autumn-nocal-320x480.png'
-    ),
-        (
-        'http://files.smashingmagazine.com/wallpapers/'
-        'nov-21/no-shave-november/cal/'
-        'nov-21-no-shave-november-cal-320x480.jpg'
-    ),
-        (
-        'http://files.smashingmagazine.com/wallpapers/'
-        'nov-21/no-shave-november/nocal/'
-        'nov-21-no-shave-november-nocal-320x480.jpg'
-    ),
-        (
-        'http://files.smashingmagazine.com/wallpapers/'
-        'november-11/november-11-little_mademoiselle'
-        '_p__94-nocal-320x480.jpg'
-    )}
+    return set(json.loads(URI_DATA.read_text())['expected_hrefs'])

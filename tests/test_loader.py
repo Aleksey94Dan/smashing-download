@@ -1,5 +1,6 @@
 """Testing download."""
 
+from datetime import date
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
@@ -13,50 +14,39 @@ from smashing_download import loader
     ),
     [
         (
-            '2021-01-01',
-            '2557x1440',
+            date.fromisoformat('2021-02-01'),
+            '320x480',
             (
-                'https://www.smashingmagazine.com/2020/12/'
-                'desktop-wallpaper-calendars-january-2021/'
-            ),
-        ),
-        (
-            '2021-11-01',
-            '2559x1440',
-            (
-                'https://www.smashingmagazine.com/2021/10/'
-                'desktop-wallpaper-calendars-november-2021/'
-            ),
-        ),
-        (
-            '2021-12-01',
-            '1439x900',
-            (
-                'https://www.smashingmagazine.com/2021/11/'
-                'desktop-wallpaper-calendars-december-2021/'
+                'https://www.smashingmagazine.com/2021/01/'
+                'desktop-wallpaper-calendars-february-2021/'
             ),
         ),
     ],
 )
-def test_loader(
+def test_loader(  # noqa: WPS211, WPS210
     desired_date,
     resolution,
     url,
+    html,
+    expected_hrefs,
     image,
     requests_mock,
 ):
     """Test download and save page."""
     with TemporaryDirectory() as path_to_save:
         path_to_save = Path(path_to_save)
-        requests_mock.get(url, content=image)
-        output = loader.download(resolution, desired_date, path_to_save)
-        path_to_image = [
-            image_path
-            for image_path in output.iterdir()
-            if image_path.is_file()
-        ][0]
+        requests_mock.get(url, text=html)
+        for href in expected_hrefs:
+            requests_mock.get(href, content=image)
+        output = loader.download(
+            resolution=resolution,
+            actual_date=desired_date,
+            path_to_save=path_to_save,
+        )
+        path_to_images = list(output.iterdir())
 
-        assert len(list(output.iterdir())) == 1
+        assert len(path_to_images) == len(expected_hrefs)
 
-        with open(path_to_image) as actual_image:
-            assert image == actual_image.read()
+        for path_to_image in path_to_images:
+            with open(path_to_image, 'rb') as actual_image:
+                assert image == actual_image.read()
