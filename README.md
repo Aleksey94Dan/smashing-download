@@ -6,7 +6,7 @@ Console utility for downloading desktop wallpaper from the resource [https://www
 
 # Requirements
 
-You must have python version 3.6 installed. or higher.
+You must have python version 3.10 installed. or higher.
 Also you must have pip installed - The Python Package Installer.
 
 # Installation
