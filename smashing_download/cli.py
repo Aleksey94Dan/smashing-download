@@ -6,7 +6,7 @@ from pathlib import Path
 from smashing_download import logger
 
 
-def get_dir_path(path_to_save: str) -> Path:
+def get_dir_path(path_to_save: str) -> Path:  # pragma: no cover
     """Get the directory entered by the user."""
     path = Path(path_to_save)
     if not path.is_dir():
@@ -16,7 +16,7 @@ def get_dir_path(path_to_save: str) -> Path:
     return path
 
 
-def get_date(actual_date: str) -> datetime.date:
+def get_date(actual_date: str) -> datetime.date:  # pragma: no cover
     """Get the date entered by the user."""
     if len(actual_date.split('-')) < 2:
         raise argparse.ArgumentTypeError(
@@ -26,7 +26,7 @@ def get_date(actual_date: str) -> datetime.date:
     return datetime.date.fromisoformat(actual_date)
 
 
-def get_resolution(actual_res: str) -> str:
+def get_resolution(actual_res: str) -> str:  # pragma: no cover
     """Get the screen resolution entered by the user."""
     res = actual_res.split('x')
     if len(res) < 2:
@@ -36,7 +36,7 @@ def get_resolution(actual_res: str) -> str:
     return 'x'.join(res)
 
 
-def get_parser() -> argparse.ArgumentParser:
+def get_parser() -> argparse.ArgumentParser:  # pragma: no cover
     """Parser comand line arguments."""
     parser = argparse.ArgumentParser(
         prog='smashing-download',

@@ -10,7 +10,7 @@ from progress.bar import ShadyBar
 from smashing_download import parser, scrape
 
 NAME_DIR = 'wallpaper-calendar-{0}-{1}'
-DOWNLOAD = 'Downloading'
+DOWNLOAD = 'Download'
 WORKERS = 5
 
 
@@ -19,7 +19,7 @@ def make_directory(path_to_save: Path) -> None:
     path_to_save.mkdir(parents=True, exist_ok=True)
 
 
-def store(path_to_save: Path, actual_data: bytes) -> None:
+def store(path_to_save: Path, actual_data: bytes) -> None:  # pragma: no cover
     """Write data along the specified path."""
     with open(path_to_save, mode='wb') as the_out:
         the_out.write(actual_data)
@@ -39,7 +39,7 @@ def get_image_hrefs(
     return _compose(parser.get_image_hrefs, scrape.get_content)(url, resolution)
 
 
-def _pull(image_href: str, path_to_dir: Path) -> None:
+def _pull(image_href: str, path_to_dir: Path) -> None:  # pragma: no cover
     image_name = parser.get_name_hrefs(image_href)
     path_to_image = path_to_dir / image_name
     image = scrape.get_content(image_href)

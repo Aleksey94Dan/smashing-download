@@ -8,7 +8,7 @@ INFO = 'info'  # noqa: WPS110
 ERROR = 'error'
 
 
-def setup(level: str) -> None:
+def setup(level: str) -> None:  # pragma: no cover
     """Configure a basic logger."""
     if level == NONE:
         return

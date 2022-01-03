@@ -5,6 +5,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 import pytest
+from requests.exceptions import ConnectionError
 from smashing_download import errors, loader
 
 
@@ -44,11 +45,11 @@ def test_loader(  # noqa: WPS211, WPS210, WPS317
         )
         path_to_images = list(output.iterdir())
 
+        assert output.is_dir()
         assert len(path_to_images) == len(expected_hrefs)
 
         for path_to_image in path_to_images:
-            with open(path_to_image, 'rb') as actual_image:
-                assert image == actual_image.read()
+            assert image == path_to_image.read_bytes()
 
 
 @pytest.mark.parametrize(  # noqa: WPS317, AAA01
@@ -75,10 +76,10 @@ def test_bad_loader(
     requests_mock,
 ):
     """Test bad download."""
-    requests_mock.get(url, exc=err)  # noqa: AAA03
+    requests_mock.get(url, exc=ConnectionError)  # noqa: AAA03
     with TemporaryDirectory() as tmpdirname:
 
-        with pytest.raises(Exception):
+        with pytest.raises(err):
             loader.download(
                 resolution=resolution,
                 actual_date=desired_date,
