@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "smashing-download"
-version = "0.1.1"
+version = "0.1.2"
 description = "CLI utility for downloading wallpaper from mashing site."
 authors = ["Aleksey94Dan <danilchenko.aleksey94@gmail.com>"]
 
